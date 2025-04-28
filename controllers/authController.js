@@ -5,13 +5,13 @@ import { registerUser, loginUser } from '../services/authService.js';
 // @access  Public
 export const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!username || !email || !password) {
       return res.status(400).json({ message: 'Please provide all fields' });
     }
 
-    const data = await registerUser({ name, email, password });
+    const data = await registerUser({ username, email, password });
 
     res.status(201).json({ message: 'User registered successfully', ...data });
   } catch (error) {
@@ -24,13 +24,13 @@ export const register = async (req, res) => {
 // @access  Public
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Please provide email and password' });
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Please provide username and password' });
     }
     
-    const data = await loginUser({ email, password });
+    const data = await loginUser({ username, password });
 
     res.status(200).json({ message: 'Login successful', ...data });
   } catch (error) {

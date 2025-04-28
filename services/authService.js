@@ -6,7 +6,7 @@ const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
-const registerUser = async ({ name, email, password }) => {
+const registerUser = async ({ username, email, password }) => {
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -20,7 +20,7 @@ const registerUser = async ({ name, email, password }) => {
 
     // Create new user
     const user = await User.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });
@@ -30,16 +30,16 @@ const registerUser = async ({ name, email, password }) => {
     console.log("token:", token);
     
 
-    return { user: { id: user._id, name: user.name, email: user.email }, token };
+    return { user: { id: user._id, username: user.username, email: user.email }, token };
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-const loginUser = async ({ email, password }) => {
+const loginUser = async ({ username, password }) => {
   try {
-    // Find user by email
-    const user = await User.findOne({ email });
+    // Find user by username
+    const user = await User.findOne({ username });
     if (!user) {
       throw new Error('Invalid email or password');
     }
@@ -47,13 +47,13 @@ const loginUser = async ({ email, password }) => {
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new Error('Invalid email or password');
+      throw new Error('Invalid username or password');
     }
 
     // Generate JWT
     const token = generateToken(user._id);
     
-    return { user: { id: user._id, name: user.name, email: user.email }, token };
+    return { user: { id: user._id, username: user.username, email: user.email }, token };
   } catch (error) {
     throw new Error(error.message);
   }
