@@ -5,7 +5,7 @@ export const protect = async (req, res, next) => {
   let token = req.headers.authorization?.split(' ')[0];  
 
   if (!token) {
-    return res.status(401).json({ message: 'Not authorized, no token' });
+    return res.status(401).json({ message: 'Не авторизований, немає токена' });
   }
 
   try {
@@ -13,6 +13,6 @@ export const protect = async (req, res, next) => {
     req.user = await User.findById(decoded.id).select('-password');
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Token failed, unauthorized' });
+    res.status(401).json({ message: 'Помилка токена, неавторизований' });
   }
 };

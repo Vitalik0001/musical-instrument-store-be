@@ -8,12 +8,12 @@ export const register = async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
-      return res.status(400).json({ message: 'Please provide all fields' });
+      return res.status(400).json({ message: 'Будь ласка, заповніть усі поля' });
     }
 
     const data = await registerUser({ username, email, password });
 
-    res.status(201).json({ message: 'User registered successfully', ...data });
+    res.status(201).json({ message: 'Користувач успішно зареєстрований', ...data });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -27,12 +27,12 @@ export const login = async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json({ message: 'Please provide username and password' });
+      return res.status(400).json({ message: 'Будь ласка, введіть ім\'я користувача та пароль' });
     }
     
     const data = await loginUser({ username, password });
 
-    res.status(200).json({ message: 'Login successful', ...data });
+    res.status(200).json({ message: 'Успішний вхід в систему', ...data });
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
