@@ -41,7 +41,7 @@ const loginUser = async ({ username, password }) => {
     // Find user by username
     const user = await User.findOne({ username });
     if (!user) {
-      throw new Error('Неправильна адреса електронної пошти або парольInvalid email or password');
+      throw new Error('Неправильна адреса електронної пошти або пароль');
     }
 
     // Compare password
