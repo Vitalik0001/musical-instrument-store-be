@@ -11,7 +11,7 @@ const registerUser = async ({ username, email, password }) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      throw new Error('User already exists');
+      throw new Error('Користувач вже існує');
     }
 
     // Hash password
@@ -41,13 +41,13 @@ const loginUser = async ({ username, password }) => {
     // Find user by username
     const user = await User.findOne({ username });
     if (!user) {
-      throw new Error('Invalid email or password');
+      throw new Error('Неправильна адреса електронної пошти або парольInvalid email or password');
     }
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new Error('Invalid username or password');
+      throw new Error('Неправильне ім\'я користувача або пароль');
     }
 
     // Generate JWT
